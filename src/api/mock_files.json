@@ -1,0 +1,24 @@
+{
+
+    "files": [
+            {
+                "name": "readme.txt",
+                "isFolder": false,
+                "modified": "2012-04-23T18:25:43.511Z",
+                "size": 432424
+            }, 
+            {
+                "name": "Pictures",
+                "isFolder": true,
+                "modified": null,
+                "size": null
+            }, 
+            {
+                "name": "Bridge.jpg",
+                "isFolder": false,
+                "modified": "2014-07-44T11:15:22.433Z",
+                "size": 5432424
+            }
+        ]
+
+}
