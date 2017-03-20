@@ -3,14 +3,14 @@
 <table class="files">
 	<tr>
 		<th>&nbsp;</th>
-		<th data-sort="name">name</th>
-		<th data-sort="modified">modified</th>
-		<th data-sort="size">size</th>
+		<th (click)="sortFiles('name')">Name</th>
+		<th (click)="sortFiles('modified')">Modified</th>
+		<th (click)="sortFiles('size')">Size</th>
 	</tr>
 	<tr *ngFor="let file of files">
 		<td><img class="icon" src="{{ file.icon }}"/></td>
 		<td>{{ file.name }}</td>
-		<td>{{ file.modified | date: 'dd/MM/yyyy H:m:s Z' }}</td>
+		<td>{{ file.modified | date: 'MM/dd/yyyy H:m:s Z' }}</td>
 		<td>{{ file.size | filesize }}</td>
 	</tr>
 </table>

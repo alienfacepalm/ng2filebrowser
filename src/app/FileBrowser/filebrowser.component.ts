@@ -12,30 +12,45 @@ import { FileStubService} from './filestub.service';
 })
 export class FileBrowserComponent {
 
-	files: any;
+	files:any;
+	direction:string;
+	sortOperator:Object;
 
 	constructor(fileStubService: FileStubService){
 		console.log(`======] FILE BROWSER [======`);
 		fileStubService.getFiles().subscribe(payload => this.create(payload.files));
+		this.direction = 'desc';
+		this.sortOperator = {
+			'>': (a, b) => a > b,
+			'<': (a, b) => a < b
+		};
 	}
 
-	//build tree structure with 
 	create(files){
 
 		let top:IFile = {name: 'files', isFolder: true, modified: null, size: null};
 		let tree = new Tree(top);
 		
-		files = files.map(file => {
-			let type = !!file.name.match(/(png|jpg|gif)/gi) ? 'image' : 'text';
-			file.icon = file.isFolder ? `assets/folder.png` : `assets/${type}.png`;
-			return file;
-		});
-
-		this.files = files.sort((a, b) => a.name > b.name ? true : false);
+		this.files = files;
+		this.sortFiles('name');
 
 		console.log(`FILES`, files);
-		//loop over files and create tree nodes from them to enable interaction: sort, search, add, remove
+		//TODO: use tree structure. 
+		//Loop over files and create tree nodes from them to enable interaction: rename, sort, search, add, remove
 
+	}
+
+	//TODO: implement tree structure
+	//BUG: when b is null, it doesn't sort
+	sortFiles(column){		
+		this.files = this.files
+			.map(file => {
+				let type = !!file.name.match(/(png|jpg|gif)/gi) ? 'image' : 'text';
+				file.icon = file.isFolder ? `assets/folder.png` : `assets/${type}.png`;
+				return file;
+			})
+			.sort((a, b) => this.sortOperator[this.direction === 'desc' ? '<' : '>'](a[column], b[column]) ? true : false);
+		this.direction = this.direction === 'desc' ? 'asc' : 'desc';
 	}
 
 }
