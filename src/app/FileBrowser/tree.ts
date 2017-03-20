@@ -16,15 +16,15 @@ export class Tree {
 		//add a file
 	}
 
-	remove(){
+	remove(filename){
 		//remove a file
 	}
 
-	sort(){
+	sort(column){
 		//sort files
 	}
 
-	rename(){
+	rename(filename, newFilename){
 		//rename a file
 	}
 

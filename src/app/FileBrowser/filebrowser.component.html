@@ -1,15 +1,16 @@
 <h1>File Browser</h1>
-<!--
-<table>
+
+<table class="files">
 	<tr>
-		<th>name</th>
-		<th>modified</th>
-		<th>size</th>
+		<th>&nbsp;</th>
+		<th data-sort="name">name</th>
+		<th data-sort="modified">modified</th>
+		<th data-sort="size">size</th>
 	</tr>
 	<tr *ngFor="let file of files">
+		<td><img class="icon" src="{{ file.icon }}"/></td>
 		<td>{{ file.name }}</td>
 		<td>{{ file.modified | date: 'dd/MM/yyyy H:m:s Z' }}</td>
 		<td>{{ file.size | filesize }}</td>
 	</tr>
 </table>
--->

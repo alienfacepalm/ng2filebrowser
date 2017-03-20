@@ -7,6 +7,6 @@ export class FileStubService {
 	constructor(private http: Http){}
 
 	getFiles(){
-		return this.http.get('api/mock_files.json').map((response:Response) => response.json());
+		return this.http.get('api/mock_files.json').map((response: Response) => response.json());
 	}
 }

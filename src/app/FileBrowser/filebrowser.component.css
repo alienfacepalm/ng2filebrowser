@@ -1,0 +1,23 @@
+* {
+	font-family: Arial;
+}
+
+.files {
+	width: 100%;
+	font-size: 2vmin;
+	border: 1px solid red;
+}
+
+.files tr td {
+	border: 1px solid blue;
+	text-align: center;
+}
+
+.files tr th {
+	cursor: pointer;
+}
+
+.icon {
+	width: 32px;
+	height: 32px;
+}
