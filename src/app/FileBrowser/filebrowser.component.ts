@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 
 import { IFile } from './file.interface';
 import { Tree } from './tree';
-import { FileStubService} from './filestub.service';
+import { StubService} from './stub.service';
 
 @Component({
 	selector: 'file-browser',
@@ -16,9 +16,9 @@ export class FileBrowserComponent {
 	direction:string;
 	sortOperator:Object;
 
-	constructor(fileStubService: FileStubService){
+	constructor(stubService: StubService){
 		console.log(`======] FILE BROWSER [======`);
-		fileStubService.getFiles().subscribe(payload => this.create(payload.files));
+		stubService.getFiles().subscribe(payload => this.create(payload.files));
 		this.direction = 'desc';
 		this.sortOperator = {
 			'>': (a, b) => a > b,

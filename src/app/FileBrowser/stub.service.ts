@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class FileStubService {
+export class StubService {
 	constructor(private http: Http){}
 
 	getFiles(){

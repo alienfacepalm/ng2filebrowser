@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { FileBrowserComponent } from './FileBrowser/filebrowser.component';
-import { FileStubService } from './FileBrowser/filestub.service';
+import { StubService } from './FileBrowser/stub.service';
 import { FileSizePipe } from './filesize.pipe';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { FileSizePipe } from './filesize.pipe';
     FormsModule,
     HttpModule
   ],
-  providers: [FileStubService],
+  providers: [StubService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
