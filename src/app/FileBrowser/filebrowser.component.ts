@@ -13,6 +13,7 @@ import { StubService} from './stub.service';
 export class FileBrowserComponent {
 
 	files: any;
+	supportedFileExtensions: Array<string>;
 	sort: string;
 	controlIndex: number;
 	direction: string;
@@ -21,17 +22,28 @@ export class FileBrowserComponent {
 
 	constructor(stubService:StubService){
 		console.log(`======] FILE BROWSER [======`);
-		stubService.getFiles().subscribe(payload => this.create(payload.files));
-
+		
+		this.supportedFileExtensions = ['gif', 'jpg', 'mov', 'txt', 'doc', 'm4v', 'mp4', 'mp3', 'pdf'];
 		this.controlIndex = 0;
 		this.direction = 'desc';
 		this.sortOperator = {
 			'>': (a, b) => a > b,
 			'<': (a, b) => a < b
 		};
+
+		stubService.getFiles().subscribe(payload => this.create(payload.files));
 	}
 
-	create(files:Object): void {
+	private isFilename(column:any){
+		try{
+			let extension = column.split('.').pop();
+			return this.supportedFileExtensions.includes(extension);
+		}catch(e){
+			return false;
+		}
+	}
+
+	private create(files:Object): void {
 		//let top:IFile = {name: 'files', isFolder: true, modified: null, size: null};
 		//let tree = new Tree(top);
 		
@@ -39,29 +51,7 @@ export class FileBrowserComponent {
 		this.sortFiles('name');	
 	}
 
-	//TODO: implement binary search and remove
-	removeNode(node:string): void {
-		let confirm = window.confirm(`Really delete ${node}?`);
-		if(confirm){
-			this.files = this.files.filter(file => file.name !== node);  
-		}
-	}
-
-	//TODO: implement binary search and replace for optimization
-	renameNode(node:string): void {
-		let prompt:string = window.prompt("Rename", node);
-		if(prompt){
-			this.files.map(file => {
-				if(file.name === node){
-					file.name = prompt;
-				}
-				return file;
-			});
-		}
-	}
-
-	sortFiles(column:string): void {
-		let filetype;
+	private sortFiles(column:string): void {
 		this.sort = column;	
 		let folders = this.files.filter(file => file.isFolder)
 		                        .sort((a, b) => a.name > b.name ? true : false),
@@ -71,12 +61,44 @@ export class FileBrowserComponent {
 					return file;
 				})
 				.filter(file => !file.isFolder)
-				.sort((a, b) => this.sortOperator[this.direction === 'desc' ? '<' : '>'](a[column], b[column]) ? true : false);
+				.sort((a, b) => {
+					let aProxy = a[column], bProxy = b[column];
+					if(this.isFilename(a[column])){
+						aProxy = a[column].toLowerCase();
+						bProxy = b[column].toLowerCase();
+					}
+					return this.sortOperator[this.direction === 'desc' ? '>' : '<'](aProxy, bProxy) ? true : false
+				});
 		this.files = [...files, ...folders];
 		this.direction = this.direction === 'desc' ? 'asc' : 'desc';
 	}
 
-	showControls(row:number): void {
+   	//TODO: implement binary search/remove
+	public removeNode(node:string): void {
+		let confirm = window.confirm(`Really delete ${node}?`);
+		if(confirm){
+			this.files = this.files.filter(file => file.name !== node);  
+		}
+	}
+
+	//TODO: implement binary search/replace for optimization
+	public renameNode(node:string): void {
+		let prompt:string = window.prompt("Rename the file", node);
+		if(prompt){
+			this.files.map(file => {
+				if(file.name === node){
+					if(this.isFilename(prompt)){
+						file.name = prompt;
+					}else{
+						alert("You must include a file extension");
+					}
+				}
+				return file;
+			});
+		}
+	}
+
+	public showControls(row:number): void {
 		this.controlIndex = row;
 	}
 
