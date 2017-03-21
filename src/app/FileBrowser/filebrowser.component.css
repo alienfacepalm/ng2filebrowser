@@ -11,6 +11,11 @@ h1 {
 .files {
 	width: 100%;
 	font-size: 2vmin;
+	border-collapse: collapse;
+}
+
+.files thead th {
+	margin: 20px;
 }
 
 .files tr td {
@@ -21,8 +26,9 @@ h1 {
 	cursor: pointer;
 }
 
-.file-row {
+.control {
 	cursor: pointer;
+	font-size: 3vmin;
 }
 
 .icon {
@@ -31,13 +37,5 @@ h1 {
 }
 
 .active {
-	background: #d3d3d3;
-}
-
-.controls-hidden {
-	visibility: hidden;
-}
-
-.controls-shown {
-	visibility: visible;
+	border-bottom: 3px solid #000000;
 }

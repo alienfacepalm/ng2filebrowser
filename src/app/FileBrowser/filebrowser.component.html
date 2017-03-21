@@ -1,31 +1,35 @@
 <h1>File Browser</h1>
 
 <table class="files">
-	<tr>
-		<th>&nbsp;</th>
-		<th [class.active]="sort === 'name'" (click)="sortFiles('name')">
-			<fa *ngIf="sort === 'name'" [name]="'sort'"></fa>
-			Name
-		</th>
-		<th [class.active]="sort === 'modified'" (click)="sortFiles('modified')">
-			<fa *ngIf="sort === 'modified'" [name]="'sort'"></fa>
-			Modified
-		</th>
-		<th [class.active]="sort === 'size'" (click)="sortFiles('size')">
-			<fa *ngIf="sort === 'size'" [name]="'sort'"></fa>
-			Size
-		</th>
-		<th>&nbsp;</th>
-	</tr>
-	<tr *ngFor="let file of files; let i = index" (mouseover)="showControls(i)" [attr.id]="i">
-		<td><img class="icon" src="{{ file.icon }}"/></td>
-		<td>{{ file.name }}</td>
-		<td>{{ file.modified | date: 'MM/dd/yyyy H:m:s Z' }}</td>
-		<td>{{ file.size | filesize }}</td>
-		<td class="file-row" [class.controls-shown]="controlIndex === row">
-		    <fa [name]="'edit'" (click)="renameNode(file.name)"></fa>
-		    &nbsp;&nbsp;
-			<fa [name]="'trash'" (click)="removeNode(file.name)"></fa>
-		</td>
-	</tr>
+	<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<th [class.active]="sort === 'name'" (click)="sortFiles('name')">
+				<fa *ngIf="sort === 'name'" [name]="'sort'"></fa>
+				Name
+			</th>
+			<th [class.active]="sort === 'modified'" (click)="sortFiles('modified')">
+				<fa *ngIf="sort === 'modified'" [name]="'sort'"></fa>
+				Modified
+			</th>
+			<th [class.active]="sort === 'size'" (click)="sortFiles('size')">
+				<fa *ngIf="sort === 'size'" [name]="'sort'"></fa>
+				Size
+			</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let file of files; let i = index" (mouseover)="showControls(i)" [attr.id]="i" [style.background]="controlIndex === i ? '#dcdcdc' : '#ffffff'">
+			<td><img class="icon" src="{{ file.icon }}"/></td>
+			<td>{{ file.name }}</td>
+			<td>{{ file.modified | date: 'MM/dd/yyyy H:m:s Z' }}</td>
+			<td>{{ file.size | filesize }}</td>
+			<td *ngIf="controlIndex === i">
+			    <fa class="control" [name]="'edit'" (click)="renameNode(file.name)"></fa>
+			    &nbsp;&nbsp;
+				<fa class="control" [name]="'trash'" (click)="removeNode(file.name)"></fa>
+			</td>
+		</tr>
+	</tbody>
 </table>

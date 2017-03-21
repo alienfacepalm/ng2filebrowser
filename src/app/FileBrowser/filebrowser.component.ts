@@ -34,9 +34,9 @@ export class FileBrowserComponent {
 		stubService.getFiles().subscribe(payload => this.create(payload.files));
 	}
 
-	private isFilename(column:any){
+	private isFilename(value:any){
 		try{
-			let extension = column.split('.').pop();
+			let extension = value.split('.').pop();
 			return this.supportedFileExtensions.includes(extension);
 		}catch(e){
 			return false;
@@ -62,7 +62,8 @@ export class FileBrowserComponent {
 				})
 				.filter(file => !file.isFolder)
 				.sort((a, b) => {
-					let aProxy = a[column], bProxy = b[column];
+					let aProxy = a[column], 
+					    bProxy = b[column];
 					if(this.isFilename(a[column])){
 						aProxy = a[column].toLowerCase();
 						bProxy = b[column].toLowerCase();
