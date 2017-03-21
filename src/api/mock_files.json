@@ -1,22 +1,40 @@
 {
     "files": [
-            {
-                "name": "readme.txt",
-                "isFolder": false,
-                "modified": "2012-04-23T18:25:43.511Z",
-                "size": 432424
-            }, 
-            {
-                "name": "Pictures",
-                "isFolder": true,
-                "modified": null,
-                "size": null
-            }, 
-            {
-                "name": "Bridge.jpg",
-                "isFolder": false,
-                "modified": "2014-07-44T11:15:22.433Z",
-                "size": 5432424
-            }
-        ]
+        {
+            "name": "readme.txt",
+            "isFolder": false,
+            "modified": "2012-04-23T18:25:43.511Z",
+            "size": 432424
+        }, 
+        {
+            "name": "Pictures",
+            "isFolder": true,
+            "modified": null,
+            "size": null
+        }, 
+        {
+            "name": "Bridge.jpg",
+            "isFolder": false,
+            "modified": "2014-07-44T11:15:22.433Z",
+            "size": 5432424
+        },
+        {
+            "name": "Skydive.mov",
+            "isFolder": false,
+            "modified": "2017-03-22T12:12:13.433Z",
+            "size": 5432424
+        },
+        {
+            "name": "Movies",
+            "isFolder": true,
+            "modified": null,
+            "size": null
+        }, 
+        {
+            "name": "Documents",
+            "isFolder": true,
+            "modified": null,
+            "size": null
+        }
+    ]
 }

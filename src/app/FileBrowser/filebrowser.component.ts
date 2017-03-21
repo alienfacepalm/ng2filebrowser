@@ -12,13 +12,18 @@ import { StubService} from './stub.service';
 })
 export class FileBrowserComponent {
 
-	files:any;
-	direction:string;
-	sortOperator:Object;
+	files: any;
+	sort: string;
+	controlIndex: number;
+	direction: string;
+	setIcon: any;
+	sortOperator: Object;
 
-	constructor(stubService: StubService){
+	constructor(stubService:StubService){
 		console.log(`======] FILE BROWSER [======`);
 		stubService.getFiles().subscribe(payload => this.create(payload.files));
+
+		this.controlIndex = 0;
 		this.direction = 'desc';
 		this.sortOperator = {
 			'>': (a, b) => a > b,
@@ -26,31 +31,53 @@ export class FileBrowserComponent {
 		};
 	}
 
-	create(files){
-
-		let top:IFile = {name: 'files', isFolder: true, modified: null, size: null};
-		let tree = new Tree(top);
+	create(files:Object): void {
+		//let top:IFile = {name: 'files', isFolder: true, modified: null, size: null};
+		//let tree = new Tree(top);
 		
 		this.files = files;
-		this.sortFiles('name');
-
-		console.log(`FILES`, files);
-		//TODO: use tree structure. 
-		//Loop over files and create tree nodes from them to enable interaction: rename, sort, search, add, remove
-
+		this.sortFiles('name');	
 	}
 
-	//TODO: implement tree structure
-	//BUG: when b is null, it doesn't sort
-	sortFiles(column){		
-		this.files = this.files
-			.map(file => {
-				let type = !!file.name.match(/(png|jpg|gif)/gi) ? 'image' : 'text';
-				file.icon = file.isFolder ? `assets/folder.png` : `assets/${type}.png`;
+	//TODO: implement binary search and remove
+	removeNode(node:string): void {
+		let confirm = window.confirm(`Really delete ${node}?`);
+		if(confirm){
+			this.files = this.files.filter(file => file.name !== node);  
+		}
+	}
+
+	//TODO: implement binary search and replace for optimization
+	renameNode(node:string): void {
+		let prompt:string = window.prompt("Rename", node);
+		if(prompt){
+			this.files.map(file => {
+				if(file.name === node){
+					file.name = prompt;
+				}
 				return file;
-			})
-			.sort((a, b) => this.sortOperator[this.direction === 'desc' ? '<' : '>'](a[column], b[column]) ? true : false);
+			});
+		}
+	}
+
+	sortFiles(column:string): void {
+		let filetype;
+		this.sort = column;	
+		let folders = this.files.filter(file => file.isFolder)
+		                        .sort((a, b) => a.name > b.name ? true : false),
+		    files = this.files
+				.map(file => {
+					file.icon = file.isFolder ? `assets/folder.png` : `assets/text.png`;
+					return file;
+				})
+				.filter(file => !file.isFolder)
+				.sort((a, b) => this.sortOperator[this.direction === 'desc' ? '<' : '>'](a[column], b[column]) ? true : false);
+		this.files = [...files, ...folders];
 		this.direction = this.direction === 'desc' ? 'asc' : 'desc';
+	}
+
+	showControls(row:number): void {
+		this.controlIndex = row;
 	}
 
 }
