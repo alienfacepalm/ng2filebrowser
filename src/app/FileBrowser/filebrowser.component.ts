@@ -88,7 +88,7 @@ export class FileBrowserComponent {
 		if(prompt){
 			this.files.map(file => {
 				if(file.name === node){
-					if(this.isFilename(prompt)){
+					if(this.isFilename(prompt) || file.isFolder){
 						file.name = prompt;
 					}else{
 						alert("You must include a file extension");
