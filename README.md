@@ -1,9 +1,13 @@
 Installation
 
 git clone https://github.com/alienfacepalm/ng2filebrowser.git
+
 cd ng2filebrowser
+
 npm install -g angular-cli
+
 npm install
+
 npm start
 
 navigate browser to http://localhost:4200
