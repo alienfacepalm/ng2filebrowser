@@ -76,7 +76,7 @@ export class FileBrowserComponent {
 
    	//TODO: implement binary search/remove
 	public removeNode(node:string): void {
-		let confirm = window.confirm(`Really delete ${node}?`);
+		let confirm:boolean = window.confirm(`Really delete ${node}?`);
 		if(confirm){
 			this.files = this.files.filter(file => file.name !== node);  
 		}
