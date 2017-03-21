@@ -1,3 +1,19 @@
+Installation
+
+git clone https://github.com/alienfacepalm/ng2filebrowser.git
+cd ng2filebrowser
+npm install -g angular-cli
+npm install
+npm start
+
+navigate browser to http://localhost:4200
+
+
+
+-------------------------TASK-----------------------------
+
+
+
 There are two deliverables:
  
 1) Design document for the full stack of the system, including considerations for the backend performance, scalability, reliability, security, and multi-tenancy of the system. The system must support many users with millions of files.
