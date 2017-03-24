@@ -21,7 +21,7 @@ export class FileBrowserComponent {
 	sortOperator: Object;
 
 	constructor(stubService:StubService){
-		console.log(`======] FILE BROWSER [======`, this.myName);
+		console.log(`======] FILE BROWSER [======`);
 		
 		this.supportedFileExtensions = ['gif', 'jpg', 'mov', 'txt', 'doc', 'm4v', 'mp4', 'mp3', 'pdf'];
 		this.controlIndex = 0;
