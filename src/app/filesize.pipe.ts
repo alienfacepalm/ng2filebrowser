@@ -5,7 +5,7 @@ export class FileSizePipe implements PipeTransform {
 
   private units = ["bytes", "KB", "MB", "GB", "TB", "PB"];
 
-  transform(bytes: number = 0, precision: number = 2 ) : string {
+  transform(bytes: number = 0, precision: number = 2): string {
     if (isNaN(parseFloat(String(bytes))) || ! isFinite(bytes)){
     	return "";
     }
@@ -17,7 +17,7 @@ export class FileSizePipe implements PipeTransform {
       unit++;
     }
 
-    return bytes.toFixed(+precision )+" "+this.units[unit];
+    return bytes.toFixed(+precision)+" "+this.units[unit];
   }
 
 }
