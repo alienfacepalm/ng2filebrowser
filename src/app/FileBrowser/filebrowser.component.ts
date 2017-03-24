@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 
 import { IFile } from './file.interface';
 import { Tree } from './tree';
-import { StubService} from './stub.service';
+import { StubService } from './stub.service';
 
 @Component({
 	selector: 'file-browser',
@@ -21,7 +21,7 @@ export class FileBrowserComponent {
 	sortOperator: Object;
 
 	constructor(stubService:StubService){
-		console.log(`======] FILE BROWSER [======`);
+		console.log(`======] FILE BROWSER [======`, this.myName);
 		
 		this.supportedFileExtensions = ['gif', 'jpg', 'mov', 'txt', 'doc', 'm4v', 'mp4', 'mp3', 'pdf'];
 		this.controlIndex = 0;
@@ -91,7 +91,7 @@ export class FileBrowserComponent {
 					if(this.isFilename(prompt) || file.isFolder){
 						file.name = prompt;
 					}else{
-						alert("You must include a file extension");
+						alert("You must include a valid file extension");
 					}
 				}
 				return file;
