@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { IFile } from './file.interface';
@@ -12,6 +12,7 @@ import { StubService } from './stub.service';
 })
 export class FileBrowserComponent {
 
+	@Input() title: string;
 	files: any;
 	supportedFileExtensions: Array<string>;
 	sort: string;
