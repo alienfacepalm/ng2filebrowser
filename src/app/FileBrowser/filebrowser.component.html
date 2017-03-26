@@ -20,7 +20,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let file of files; let i = index" (mouseover)="showControls(i)" [attr.id]="i" 
+		<tr *ngFor="let file of files; let i = index" (mouseover)="showControls(i)" [attr.id]="i" [attr.data-guid]="file.guid" 
 		    [style.background]="controlIndex === i ? '#dcdcdc' : '#ffffff'">
 
 			<td><img class="icon" src="{{ file.icon }}"/></td>
