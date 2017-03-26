@@ -8,7 +8,7 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
 import { AppComponent } from './app.component';
 import { FileBrowserComponent } from './FileBrowser/filebrowser.component';
 import { StubService } from './FileBrowser/stub.service';
-import { FileSizePipe } from './filesize.pipe';
+import { FileSizePipe } from './lib/filesize.pipe';
 
 @NgModule({
   declarations: [
