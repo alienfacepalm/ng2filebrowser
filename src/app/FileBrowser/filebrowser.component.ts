@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import { IFile } from './file.interface';
 import { Tree } from './tree';
 import { StubService } from './stub.service';
+import { isFilename } from '../lib/file.utils';
 
 @Component({
 	selector: 'file-browser',
@@ -16,32 +17,20 @@ export class FileBrowserComponent {
 	files: any;
 	supportedFileExtensions: Array<string>;
 	sort: string;
-	controlIndex: number;
-	direction: string;
-	setIcon: any;
+	controlIndex: number = 0;;
+	direction: string = 'desc';
 	sortOperator: Object;
 
 	constructor(stubService:StubService){
 		console.log(`======] FILE BROWSER [======`);
 		
 		this.supportedFileExtensions = ['gif', 'jpg', 'mov', 'txt', 'doc', 'm4v', 'mp4', 'mp3', 'pdf'];
-		this.controlIndex = 0;
-		this.direction = 'desc';
 		this.sortOperator = {
 			'>': (a, b) => a > b,
 			'<': (a, b) => a < b
 		};
 
 		stubService.getFiles().subscribe(payload => this.create(payload.files));
-	}
-
-	private isFilename(value:any){
-		try{
-			let extension = value.split('.').pop();
-			return this.supportedFileExtensions.includes(extension);
-		}catch(e){
-			return false;
-		}
 	}
 
 	private create(files:Object): void {
@@ -65,7 +54,7 @@ export class FileBrowserComponent {
 				.sort((a, b) => {
 					let aProxy = a[column], 
 					    bProxy = b[column];
-					if(this.isFilename(a[column])){
+					if(isFilename(this.supportedFileExtensions, a[column])){
 						aProxy = a[column].toLowerCase();
 						bProxy = b[column].toLowerCase();
 					}
@@ -85,12 +74,12 @@ export class FileBrowserComponent {
 
 	//TODO: implement binary search/replace for optimization
 	public renameNode(node:string): void {
-		let prompt:string = window.prompt("Rename the file", node);
-		if(prompt){
+		let filename:string = window.prompt("Rename the file", node);
+		if(filename){
 			this.files.map(file => {
 				if(file.name === node){
-					if(this.isFilename(prompt) || file.isFolder){
-						file.name = prompt;
+					if(isFilename(this.supportedFileExtensions, filename) || file.isFolder){
+						file.name = filename;
 					}else{
 						alert("You must include a valid file extension");
 					}
