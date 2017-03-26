@@ -22,6 +22,7 @@
 	<tbody>
 		<tr *ngFor="let file of files; let i = index" (mouseover)="showControls(i)" [attr.id]="i" 
 		    [style.background]="controlIndex === i ? '#dcdcdc' : '#ffffff'">
+
 			<td><img class="icon" src="{{ file.icon }}"/></td>
 			<td>{{ file.name }}</td>
 			<td>{{ file.modified | date: 'MM/dd/yyyy H:m:s Z' }}</td>

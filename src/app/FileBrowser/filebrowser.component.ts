@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { IFile } from './file.interface';
 import { Tree } from './tree';
 import { StubService } from './stub.service';
-import { isFilename } from '../lib/file.utils';
+import { isFilename, generateGuid } from '../lib/file.utils';
+
+import { Document } from '../File/document';
+import { IFile } from '../File/file.interface';
 
 @Component({
 	selector: 'file-browser',
@@ -14,51 +16,64 @@ import { isFilename } from '../lib/file.utils';
 export class FileBrowserComponent {
 
 	@Input() title: string;
-	files: any;
-	supportedFileExtensions: Array<string>;
-	sort: string;
-	controlIndex: number = 0;;
-	direction: string = 'desc';
-	sortOperator: Object;
+	private files: any;
+	private supportedFileExtensions: Array<string>;
+	private sort: string;
+	private controlIndex: number = 0;;
+	private direction: string = 'desc';
+	private sortOperator: Object;
 
 	constructor(stubService:StubService){
 		console.log(`======] FILE BROWSER [======`);
 		
 		this.supportedFileExtensions = ['gif', 'jpg', 'mov', 'txt', 'doc', 'm4v', 'mp4', 'mp3', 'pdf'];
 		this.sortOperator = {
-			'>': (a, b) => a > b,
-			'<': (a, b) => a < b
+			'>': (a:IFile, b:IFile) => a > b,
+			'<': (a:IFile, b:IFile) => a < b
 		};
 
-		stubService.getFiles().subscribe(payload => this.create(payload.files));
+		stubService.fetchFiles().subscribe(payload => this.create(payload.json().files));
 	}
 
-	private create(files:Object): void {
-		//let top:IFile = {name: 'files', isFolder: true, modified: null, size: null};
-		//let tree = new Tree(top);
+	private create(files:Array<Object>): void {
+		let documentList:Array<Document> = [];
+
+		files.forEach(file => {
+			let f = Object(file),
+			    document:Document = new Document({
+			    	guid: generateGuid(),
+			    	name: f.name,
+			    	isFolder: f.isFolder,
+			    	modified: f.modified,
+			    	size: f.size
+			    });
+
+			documentList.push(document);
+
+		});
 		
-		this.files = files;
+		this.files = documentList;
 		this.sortFiles('name');	
 	}
 
 	private sortFiles(column:string): void {
 		this.sort = column;	
 		let folders = this.files.filter(file => file.isFolder)
-		                        .sort((a, b) => a.name > b.name ? true : false),
+		                        .sort((a:IFile, b:IFile) => a.name > b.name ? 1 : 0),
 		    files = this.files
 				.map(file => {
 					file.icon = file.isFolder ? `assets/folder.png` : `assets/text.png`;
 					return file;
 				})
 				.filter(file => !file.isFolder)
-				.sort((a, b) => {
+				.sort((a:IFile, b:IFile) => {
 					let aProxy = a[column], 
 					    bProxy = b[column];
 					if(isFilename(this.supportedFileExtensions, a[column])){
 						aProxy = a[column].toLowerCase();
 						bProxy = b[column].toLowerCase();
 					}
-					return this.sortOperator[this.direction === 'desc' ? '>' : '<'](aProxy, bProxy) ? true : false
+					return this.sortOperator[this.direction === 'desc' ? '>' : '<'](aProxy, bProxy) ? 1 : 0
 				});
 		this.files = [...files, ...folders];
 		this.direction = this.direction === 'desc' ? 'asc' : 'desc';
