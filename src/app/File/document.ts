@@ -10,11 +10,13 @@ export class Document {
 	private _icon: string;
 
 	public constructor(properties: Object){
-		this.guid = properties.guid;
-		this.name = properties.name;
-		this.isFolder = properties.isFolder;
-		this.modified = properties.modified;
-		this.size = properties.size;
+  	let p = Object(properties);
+
+		this.guid = p.guid;
+		this.name = p.name;
+		this.isFolder = p.isFolder;
+		this.modified = p.modified;
+		this.size = p.size;
 		this.icon = null;
 	}
 
