@@ -9,6 +9,6 @@ export class StubService {
 	constructor(private http: Http){}
 
 	fetchFiles(){
-		return this.http.get('api/mock_files.json'));
+		return this.http.get('api/mock_files.json');
 	}
 }
