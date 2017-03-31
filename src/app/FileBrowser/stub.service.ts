@@ -4,8 +4,6 @@ import { Http, Response } from '@angular/http';
 @Injectable()
 export class StubService {
 
-	//response: Array<Object>;
-
 	constructor(private http: Http){}
 
 	fetchFiles(){
